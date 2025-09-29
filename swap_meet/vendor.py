@@ -11,10 +11,19 @@ class Vendor:
             return False
         
         for index in range(len(self.inventory)):
-            fruit = self.inventory[index]
-            if fruit == item:
+            current_item = self.inventory[index]
+            if current_item == item:
                 self.inventory[index] = self.inventory[-1] 
                 self.inventory.pop()
                 break
     
         return item
+    
+    def get_by_id(self, id):
+        for item in self.inventory:
+            if item.id == id:
+                return item
+            
+        return None
+
+
