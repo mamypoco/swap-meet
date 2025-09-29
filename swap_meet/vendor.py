@@ -1,2 +1,26 @@
 class Vendor:
-    pass
+    def __init__(self, inventory=None):
+        self.inventory = [] if inventory is None else inventory
+
+    def add(self, item):
+        self.inventory.append(item)
+        return item
+    
+    def remove(self, item):
+        if item not in self.inventory:
+            return False
+
+        # item = "Orange"
+        # ["apple", "orange", "banana"]
+        for index in range(len(self.inventory)):
+            fruit = self.inventory[index]
+            if fruit == item:
+                #["apple", "banana", "banana"]
+                #["apple", "banana"] 
+                self.inventory[index] = self.inventory[-1] 
+                self.inventory.pop()
+                # vs self.inventory.pop(index)
+
+        return item
+            
+        
