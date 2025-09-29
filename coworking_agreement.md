@@ -36,5 +36,5 @@ Makiko - Be able to explain my process and code clearly, and understand why and 
 *Other co-working agreements that were not captured in the above sections.*
 
 ## Signatures
-Mami Nishiwaki, _______________
+Mami Nishiwaki, Makiko Yokoyama
 Date: Sep 29, 2025
