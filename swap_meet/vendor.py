@@ -25,7 +25,7 @@ class Vendor:
                 return item
 
         return None
-    
+
     def _get_inventory_ids(self, inventory):
         """Return a list of item IDs from the given inventory."""
         return [item.id for item in inventory]
@@ -33,7 +33,7 @@ class Vendor:
         # for item in inventory:
         #     ids.append(item.id)
         # return ids
-    
+
     def _transfer_item_by_id(self, item_id, item_ids, vendor):
         """
         Move the item with item_id from self.inventory to other_vendor.inventory.
@@ -66,7 +66,7 @@ class Vendor:
         other_vendor._transfer_item_by_id(their_id, their_ids, self)
 
         return True
-    
+
         # for index in range(len(their_ids)):
         #     current_id = their_ids[index]
         #     if current_id == their_id:
@@ -77,7 +77,7 @@ class Vendor:
     def swap_first_item(self, other_vendor):
         if not self.inventory or not other_vendor.inventory:
             return False
-        
+
         my_first = self.inventory[0]
         their_first = other_vendor.inventory[0]
 
@@ -89,7 +89,5 @@ class Vendor:
 
         other_vendor.inventory[0] = other_vendor.inventory[-1]
         other_vendor.inventory.pop()
-    
-        return True
-    
 
+        return True
