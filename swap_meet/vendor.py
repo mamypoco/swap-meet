@@ -29,10 +29,6 @@ class Vendor:
     def _get_inventory_ids(self, inventory):
         """Return a list of item IDs from the given inventory."""
         return [item.id for item in inventory]
-        # ids = []
-        # for item in inventory:
-        #     ids.append(item.id)
-        # return ids
 
     def _transfer_item_by_id(self, item_id, item_ids, vendor):
         """
@@ -67,43 +63,52 @@ class Vendor:
 
         return True
 
-        # for index in range(len(their_ids)):
-        #     current_id = their_ids[index]
-        #     if current_id == their_id:
-        #         self.inventory.append(other_vendor.inventory[index])
-        #         other_vendor.inventory[index] = other_vendor.inventory[-1]
-        #         other_vendor.inventory.pop()
-
-
     def swap_first_item(self, other_vendor):
-            if not self.inventory or not other_vendor.inventory:
-                return False
+        
+        if not self.inventory or not other_vendor.inventory:
+            return False
 
-            my_first = self.inventory[0]
-            their_first = other_vendor.inventory[0]
+        my_first_item = self.inventory[0]
+        their_first_item = other_vendor.inventory[0]
 
-            self.remove(my_first)
-            other_vendor.remove(their_first)
+        return self.swap_items(other_vendor, my_first_item, their_first_item)
 
-            self.add(their_first)
-            other_vendor.add(my_first)
+    def get_by_category(self, category):
+        
+        result = []
 
-            return True
+        for item in self.inventory:
+            item_category = item.get_category()
+            if item_category == category:
+                result.append(item)
 
-    # def swap_first_item(self, other_vendor):
-    #     if not self.inventory or not other_vendor.inventory:
-    #         return False
+        return result
 
-    #     my_first = self.inventory[0]
-    #     their_first = other_vendor.inventory[0]
+    def get_best_by_category(self, category):
+        
+        category_items = self.get_by_category(category)
 
-    #     other_vendor.inventory.append(my_first)
-    #     self.inventory.append(their_first)
+        if not category_items:
+            return None
+        
+        best_item = category_items[0]
+        best_condition = category_items[0].condition
+        
+        for item in category_items:
+            if item.condition > best_condition:
+                best_item = item
+                best_condition = item.condition
 
-    #     self.inventory[0] = self.inventory[-1]
-    #     self.inventory.pop()
+        return best_item
+    
+    def swap_best_by_category(self, other_vendor, my_priority, their_priority):
 
-    #     other_vendor.inventory[0] = other_vendor.inventory[-1]
-    #     other_vendor.inventory.pop()
+        my_best_item = self.get_best_by_category(their_priority)
+        their_best_item = other_vendor.get_best_by_category(my_priority)
 
-    #     return True
+        if my_best_item is None or their_best_item is None:
+            return False
+
+        self.swap_items(other_vendor, my_best_item, their_best_item)
+
+        return True
