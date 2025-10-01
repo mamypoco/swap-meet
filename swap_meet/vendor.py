@@ -47,3 +47,20 @@ class Vendor:
         their_first_item = other_vendor.inventory[0]
 
         return self.swap_items(other_vendor, my_first_item, their_first_item)
+    
+    def get_by_category(self, category):
+        
+        return [item for item in self.inventory if item.get_category() == category]
+    
+    def get_best_by_category(self, category): #category = "Clothing"
+        self.inventory
+        category_items = self.get_by_category(category) # ["Clothing1, 5", "Clothing2, 2"]
+
+        if not category_items:
+            return None
+
+        # pick the best item and the instance of the best item
+    
+    def swap_best_by_category(self, other_vender, my_priority, their_priority):
+        pass
+

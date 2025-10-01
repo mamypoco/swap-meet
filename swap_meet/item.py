@@ -12,6 +12,6 @@ class Item:
         return f"An object of type Item with id {self.id}."
 
     def condition_description(self):
-        msg = CONDITIONS[self.condition]
+        msg = CONDITIONS.get(self.condition)
         return msg
 
