@@ -74,20 +74,36 @@ class Vendor:
         #         other_vendor.inventory[index] = other_vendor.inventory[-1]
         #         other_vendor.inventory.pop()
 
+
     def swap_first_item(self, other_vendor):
-        if not self.inventory or not other_vendor.inventory:
-            return False
+            if not self.inventory or not other_vendor.inventory:
+                return False
 
-        my_first = self.inventory[0]
-        their_first = other_vendor.inventory[0]
+            my_first = self.inventory[0]
+            their_first = other_vendor.inventory[0]
 
-        other_vendor.inventory.append(my_first)
-        self.inventory.append(their_first)
+            self.remove(my_first)
+            other_vendor.remove(their_first)
 
-        self.inventory[0] = self.inventory[-1]
-        self.inventory.pop()
+            self.add(their_first)
+            other_vendor.add(my_first)
 
-        other_vendor.inventory[0] = other_vendor.inventory[-1]
-        other_vendor.inventory.pop()
+            return True
 
-        return True
+    # def swap_first_item(self, other_vendor):
+    #     if not self.inventory or not other_vendor.inventory:
+    #         return False
+
+    #     my_first = self.inventory[0]
+    #     their_first = other_vendor.inventory[0]
+
+    #     other_vendor.inventory.append(my_first)
+    #     self.inventory.append(their_first)
+
+    #     self.inventory[0] = self.inventory[-1]
+    #     self.inventory.pop()
+
+    #     other_vendor.inventory[0] = other_vendor.inventory[-1]
+    #     other_vendor.inventory.pop()
+
+    #     return True
