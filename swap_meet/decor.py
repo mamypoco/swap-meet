@@ -9,4 +9,6 @@ class Decor(Item):
         return "Decor"
 
     def __str__(self):
-        return f"An object of type Decor with id {self.id}. It takes up a {self.width} by {self.length} sized space."
+        item_message = super().__str__()
+        type_message = f"It takes up a {self.width} by {self.length} sized space."
+        return " ".join((item_message,type_message))

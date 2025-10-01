@@ -8,4 +8,6 @@ class Electronics(Item):
         return "Electronics"
     
     def __str__(self):
-        return f"An object of type Electronics with id {self.id}. This is a {self.type} device."
+        item_message = super().__str__()
+        type_message = f"This is a {self.type} device."
+        return " ".join((item_message,type_message))
