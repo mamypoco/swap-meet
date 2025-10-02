@@ -1,8 +1,13 @@
 from uuid import uuid4
 from .constants import CONDITIONS
+from.errors import InvalidIDError
 class Item:
     def __init__(self, id=None, condition=0, age=None):
         self.id = int(uuid4()) if id is None else id
+
+        if not isinstance(self.id, int):
+            raise InvalidIDError(self.id)
+        
         self.condition = condition
         self.age = age
 

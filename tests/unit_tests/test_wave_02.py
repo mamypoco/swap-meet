@@ -1,6 +1,8 @@
 import pytest
 from swap_meet.vendor import Vendor
 from swap_meet.item import Item
+from swap_meet.decor import Decor
+from swap_meet.errors import InvalidIDError
 
 # @pytest.mark.skip
 def test_items_have_default_uuid_length_id():
@@ -19,6 +21,16 @@ def test_items_use_custom_id_if_passed():
     item = Item(id=12345)
     assert isinstance(item.id, int)
     assert item.id == 12345
+
+# ================Optional Enhancements================
+
+# @pytest.mark.skip
+def test_items_use_invalid_id_raise_error():
+    invalid_id = "id"
+    with pytest.raises(InvalidIDError, match="ID must be an integer"):
+        Decor(invalid_id)
+    
+# =====================================================
 
 # @pytest.mark.skip
 def test_item_obj_returns_text_item_for_category():
