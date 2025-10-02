@@ -3,7 +3,7 @@ class Vendor:
         self.inventory = [] if inventory is None else inventory
 
     def add(self, item):
-        self.inventory.append(item)
+        self.inventory.append(item) 
         return item
 
     def remove(self, item):
@@ -13,17 +13,19 @@ class Vendor:
         for index in range(len(self.inventory)):
             current_item = self.inventory[index]
             if current_item == item:
-                self.inventory[index] = self.inventory[-1]
+                self.inventory[index] = self.inventory[-1] 
                 self.inventory.pop()
                 break
 
         return item
+    
 
     def get_by_id(self, id):
         for item in self.inventory:
             if item.id == id:
                 return item
         return None
+    
 
     def swap_items(self, other_vendor, my_item, their_item):
 
@@ -37,6 +39,7 @@ class Vendor:
         self.add(their_item)
 
         return True
+    
 
     def swap_first_item(self, other_vendor):
     
@@ -52,15 +55,29 @@ class Vendor:
         
         return [item for item in self.inventory if item.get_category() == category]
     
-    def get_best_by_category(self, category): #category = "Clothing"
-        self.inventory
-        category_items = self.get_by_category(category) # ["Clothing1, 5", "Clothing2, 2"]
-
-        if not category_items:
-            return None
-
-        # pick the best item and the instance of the best item
     
-    def swap_best_by_category(self, other_vender, my_priority, their_priority):
-        pass
+    def get_best_by_category(self, category):
+
+        category_items = self.get_by_category(category)
+
+        best_condition = 0
+        best_item = None
+
+        for item in category_items:
+            if item.condition > best_condition:
+                best_item = item
+                best_condition = item.condition
+
+        return best_item 
+    
+    def swap_best_by_category(self, other_vendor, my_priority, their_priority):
+        
+        my_best_item = self.get_best_by_category(their_priority)
+        their_best_item = other_vendor.get_best_by_category(my_priority)
+
+        if my_best_item is None or their_best_item is None:
+            return False
+
+        return self.swap_items(other_vendor, my_best_item, their_best_item)
+    
 
