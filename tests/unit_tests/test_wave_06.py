@@ -46,7 +46,6 @@ def test_best_by_category():
     tai = Vendor(
         inventory=[item_a, item_b, item_c, item_d, item_e]
     )
-
     best_item = tai.get_best_by_category("Clothing")
 
     assert best_item.get_category() == "Clothing"
@@ -107,8 +106,14 @@ def test_swap_best_by_category():
         my_priority="Clothing",
         their_priority="Decor"
     )
+    
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert tai.inventory == [item_a, item_b, item_c]
+    assert jesse.inventory == [item_d, item_e, item_f]
 
-    raise Exception("Complete this test according to comments below.")
+    # raise Exception("Complete this test according to comments below.")
     # *********************************************************************
     # ****** Complete Assert Portion of this test **********
     # *********************************************************************
@@ -141,7 +146,13 @@ def test_swap_best_by_category_reordered():
         their_priority="Decor"
     )
 
-    raise Exception("Complete this test according to comments below.")
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert tai.inventory == [item_c, item_b, item_a]
+    assert jesse.inventory == [item_f, item_e, item_d]
+
+    # raise Exception("Complete this test according to comments below.")
     # *********************************************************************
     # ****** Complete Assert Portion of this test **********
     # *********************************************************************
@@ -222,11 +233,16 @@ def test_swap_best_by_category_no_match_is_false():
     # Act
     result = tai.swap_best_by_category(
         other_vendor=jesse,
-        my_priority="Clothing",
+        my_priority="Decor",
         their_priority="Clothing"
     )
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert tai.inventory == [item_a, item_b, item_c]
+    assert jesse.inventory == [item_d, item_e, item_f]
 
-    raise Exception("Complete this test according to comments below.")
+    # raise Exception("Complete this test according to comments below.")
     # *********************************************************************
     # ****** Complete Assert Portion of this test **********
     # *********************************************************************
@@ -255,11 +271,17 @@ def test_swap_best_by_category_no_other_match_is_false():
     # Act
     result = tai.swap_best_by_category(
         other_vendor=jesse,
-        my_priority="Electronics",
-        their_priority="Decor"
+        my_priority="Decor",
+        their_priority="Clothing"
     )
 
-    raise Exception("Complete this test according to comments below.")
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert tai.inventory == [item_c, item_b, item_a]
+    assert jesse.inventory == [item_f, item_e, item_d]
+
+    # raise Exception("Complete this test according to comments below.")
     # *********************************************************************
     # ****** Complete Assert Portion of this test **********
     # *********************************************************************

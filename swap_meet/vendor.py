@@ -50,18 +50,41 @@ class Vendor:
         return self.swap_items(other_vendor, my_first_item, their_first_item)
     
     def get_by_category(self, category):
-        
+        # category_list = []
+        # for item in self.inventory:
+        #     if item.get_category == category:
+        # return category_list
         return [item for item in self.inventory if item.get_category() == category]
     
     def get_best_by_category(self, category): #category = "Clothing"
-        self.inventory
-        category_items = self.get_by_category(category) # ["Clothing1, 5", "Clothing2, 2"]
+        
+        category_list = self.get_by_category(category) # ["Clothing", "Clothing", "Clothing"]
 
-        if not category_items:
+        if not category_list:
             return None
 
-        # pick the best item and the instance of the best item
-    
-    def swap_best_by_category(self, other_vender, my_priority, their_priority):
-        pass
+        # pick a single best conditioned item
+        best_condition = 0
+        best_item = None
 
+        for item in category_list: # item is Clothing
+            if item.condition > best_condition:
+                best_condition = item.condition
+                best_item = item
+            elif item.condition == best_condition:
+                break
+
+        return best_item
+        
+    
+    def swap_best_by_category(self, other_vendor, my_priority, their_priority):
+        # my_priority & their_priority are best``
+        my_best_category = self.get_best_by_category(my_priority)
+        friend_best_category = self.get_best_by_category(their_priority)
+
+        if (len(self.inventory) == 0 or len(other_vendor.inventory) == 0) or (my_best_category != friend_best_category):
+            return False
+
+        elif my_best_category == friend_best_category:
+            self.swap_items(other_vendor, my_best_category, friend_best_category)
+            return True
