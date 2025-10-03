@@ -80,4 +80,40 @@ class Vendor:
 
         return self.swap_items(other_vendor, my_best_item, their_best_item)
     
+# ================Optional Enhancements================
+
+    def _get_newest_item_by_condition(self):
+        """
+        Return the newest item based on age, using condition as a tiebreaker.
+        """
+
+        best_item = self.inventory[0]
+        newest_age = best_item.age
+        best_condition = best_item.condition
+
+        for item in self.inventory:
+            item_age = item.age
+            if item_age < newest_age or (
+                item_age == newest_age and item.condition > best_condition
+            ):
+                best_item = item
+                newest_age = item_age
+                best_condition = item.condition
+
+        return best_item
+
+    def swap_newest_items_by_condition(self, other_vendor):
+        """
+        Swap the newest items between vendors, using condition to break age ties.
+        """
+
+        if not self.inventory or not other_vendor.inventory:
+            return False
+
+        my_newest = self._get_newest_item_by_condition()
+        their_newest = other_vendor._get_newest_item_by_condition()
+
+        return self.swap_items(other_vendor, my_newest, their_newest)
+
+    
 

@@ -257,3 +257,78 @@ def test_swap_best_by_category_no_other_match_is_false():
     assert len(jesse.inventory) == 3 
     assert tai.inventory == [item_c, item_b, item_a]
     assert jesse.inventory == [item_f, item_e, item_d]
+
+# ================Optional Enhancements================
+
+# @pytest.mark.skip
+def test_swap_newest_items_by_condition():
+    # Arrange
+    item_a = Decor(age=5)
+    item_b = Electronics(age=1)
+    item_c = Decor(age=7)
+    tai = Vendor(
+        inventory=[item_c, item_b, item_a]
+    )
+
+    item_d = Clothing(age=0)
+    item_e = Decor(age=10)
+    item_f = Clothing(age=3)
+    jesse = Vendor(
+        inventory=[item_f, item_e, item_d]
+    )
+
+    #Act
+    result = tai.swap_newest_items_by_condition(jesse)
+
+    assert result
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert all(item in tai.inventory for item in [item_d, item_c, item_a])
+    assert all(item in jesse.inventory for item in [item_b, item_f, item_e] )
+
+
+# @pytest.mark.skip
+def test_swap_newest_items_tie_breaks_on_condition():
+    # Arrange
+    item_a = Clothing(condition=2, age=1)
+    item_b = Electronics(condition=4, age=1)
+    item_c = Decor(condition=3, age=7)
+    tai = Vendor(
+        inventory=[item_c, item_b, item_a]
+    )
+
+    item_d = Electronics(condition=5, age=1)
+    item_e = Decor(condition=4, age=0)
+    item_f = Clothing(condition=2, age=0)
+    jesse = Vendor(
+        inventory=[item_f, item_e, item_d]
+    )
+
+    #Act
+    result = tai.swap_newest_items_by_condition(jesse)
+
+    assert result is True
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+    assert all(item in tai.inventory for item in [item_e, item_c, item_a])
+    assert all(item in jesse.inventory for item in [item_b, item_f, item_d])
+
+# @pytest.mark.skip
+def test_swap_newest_items_empty_inventory_return_false():
+    # Arrange
+    item_a = Clothing(condition=2, age=1)
+    item_b = Electronics(condition=4, age=1)
+    item_c = Decor(condition=3, age=7)
+    tai = Vendor(
+        inventory=[item_c, item_b, item_a]
+    )
+
+    jesse = Vendor()
+
+    #Act
+    result = tai.swap_newest_items_by_condition(jesse)
+
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 0
+    assert tai.inventory == [item_c, item_b, item_a]
