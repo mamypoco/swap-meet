@@ -78,9 +78,9 @@ class Vendor:
         
     
     def swap_best_by_category(self, other_vendor, my_priority, their_priority):
-        # my_priority & their_priority are best``
+        # create variables for my_priority & their_priority
         my_best_category = self.get_best_by_category(my_priority)
-        friend_best_category = self.get_best_by_category(their_priority)
+        friend_best_category = other_vendor.get_best_by_category(their_priority)
 
         if (len(self.inventory) == 0 or len(other_vendor.inventory) == 0) or (my_best_category != friend_best_category):
             return False

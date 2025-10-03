@@ -202,7 +202,7 @@ def test_swap_best_by_category_no_other_inventory_is_false():
 
     result = tai.swap_best_by_category(
         other_vendor=jesse,
-        my_priority="Decor",
+        my_priority="Clothing",
         their_priority="Clothing"
     )
 
@@ -233,7 +233,7 @@ def test_swap_best_by_category_no_match_is_false():
     # Act
     result = tai.swap_best_by_category(
         other_vendor=jesse,
-        my_priority="Decor",
+        my_priority="Electronics",
         their_priority="Clothing"
     )
     assert result is False
