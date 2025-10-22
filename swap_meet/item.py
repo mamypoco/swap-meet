@@ -1,14 +1,16 @@
 from uuid import uuid4
 from .constants import CONDITIONS
 from.errors import InvalidIDError
+from math import floor
 class Item:
+
     """
     NOTE:
     Raises: InvalidIDError: If the provided ID is not an integer.
     """
 
     def __init__(self, id=None, condition=0, age=None):
-        self.id = int(uuid4()) if id is None else id
+        self.id = uuid4().int if id is None else id
 
         if not isinstance(self.id, int):
             raise InvalidIDError(self.id)
@@ -23,7 +25,8 @@ class Item:
         return f"An object of type {self.get_category()} with id {self.id}."
 
     def condition_description(self):
-        msg = CONDITIONS.get(self.condition)
+        condition = floor(self.condition + 0.5)
+        msg = CONDITIONS[condition]
         return msg
     
 
