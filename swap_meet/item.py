@@ -25,6 +25,7 @@ class Item:
         return f"An object of type {self.get_category()} with id {self.id}."
 
     def condition_description(self):
+        # 2.5 => 2 
         condition = floor(self.condition + 0.5)
         msg = CONDITIONS[condition]
         return msg
