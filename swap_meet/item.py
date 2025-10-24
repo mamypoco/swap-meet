@@ -25,9 +25,9 @@ class Item:
         return f"An object of type {self.get_category()} with id {self.id}."
 
     def condition_description(self):
-        # 2.5 => 2 
+        # If we are not allowed to use floor, I'll use int((self.condition + 0.5) // 1).
+        # The only downside is that for negative numbers, it rounds down (e.g., -2.4 becomes -3).
+        # Chose not to use .round because it has unexpected behavior ex 2.5 -> 2
         condition = floor(self.condition + 0.5)
         msg = CONDITIONS[condition]
         return msg
-    
-

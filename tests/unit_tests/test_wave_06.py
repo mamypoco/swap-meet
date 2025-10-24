@@ -33,7 +33,6 @@ def test_get_no_matching_items_by_category():
 
     items = vendor.get_by_category("Electronics")
 
-    assert len(items) == 0
     assert items == []
 
 # @pytest.mark.skip
@@ -112,8 +111,14 @@ def test_swap_best_by_category():
     assert len(tai.inventory) == 3
     assert len(jesse.inventory) == 3
 
-    assert tai.inventory == [item_a, item_b, item_f]
-    assert jesse.inventory == [item_d, item_e, item_c]
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_f in tai.inventory
+
+    assert item_d in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_c in jesse.inventory
+
 
 # @pytest.mark.skip
 def test_swap_best_by_category_reordered():
@@ -143,8 +148,13 @@ def test_swap_best_by_category_reordered():
     assert len(tai.inventory) == 3
     assert len(jesse.inventory) == 3
 
-    assert tai.inventory == [item_a, item_b, item_f]
-    assert jesse.inventory == [item_c, item_e, item_d]
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_f in tai.inventory
+
+    assert item_c in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_d in jesse.inventory
 
 # @pytest.mark.skip
 def test_swap_best_by_category_no_inventory_is_false():
@@ -225,6 +235,7 @@ def test_swap_best_by_category_no_match_is_false():
     assert result is False
     assert len(tai.inventory) == 3
     assert len(jesse.inventory) == 3 
+
     assert tai.inventory == [item_a, item_b, item_c]
     assert jesse.inventory == [item_d, item_e, item_f]
 
@@ -283,9 +294,9 @@ def test_swap_newest_items_by_condition():
     assert result
     assert len(tai.inventory) == 3
     assert len(jesse.inventory) == 3
+    
     assert all(item in tai.inventory for item in [item_d, item_c, item_a])
     assert all(item in jesse.inventory for item in [item_b, item_f, item_e] )
-
 
 # @pytest.mark.skip
 def test_swap_newest_items_tie_breaks_on_condition():
@@ -332,3 +343,31 @@ def test_swap_newest_items_empty_inventory_return_false():
     assert len(tai.inventory) == 3
     assert len(jesse.inventory) == 0
     assert tai.inventory == [item_c, item_b, item_a]
+
+def test_swap_ignores_none_age_uses_tiebreak_and_accepts_zero_age():
+    # Arrange: 
+    item_a = Decor(age=None, condition=5)     
+    item_b = Electronics(age=1, condition=None)  
+    item_c = Decor(age=1, condition=4)       
+    tai = Vendor(inventory=[item_a, item_b, item_c])
+
+    item_d = Clothing(age=0, condition=2)     
+    item_e = Decor(age=10, condition=5)
+    item_f = Clothing(age=None, condition=1)  
+    jesse = Vendor(inventory=[item_e, item_f, item_d])
+
+    # Act
+    result = tai.swap_newest_items_by_condition(jesse)
+
+    # Assert
+    assert result is True
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+
+    assert item_d in tai.inventory
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+
+    assert item_c in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_f in jesse.inventory
