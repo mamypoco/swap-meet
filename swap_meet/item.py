@@ -1,20 +1,21 @@
 from uuid import uuid4
 from .constants import CONDITIONS
-from.errors import InvalidIDError
+# from.errors import InvalidIDError
 from math import floor
 class Item:
 
     """
     NOTE:
-    Raises: InvalidIDError: If the provided ID is not an integer.
+    Raises: TypeError: If the provided ID is not an integer.
     """
 
     def __init__(self, id=None, condition=0, age=None):
-        self.id = uuid4().int if id is None else id
 
-        if not isinstance(self.id, int):
-            raise InvalidIDError(self.id)
-        
+        if id is not None:
+            if not isinstance(id, int):
+                raise TypeError("Id must be an integer")
+
+        self.id = uuid4().int if id is None else id
         self.condition = condition
         self.age = age
 

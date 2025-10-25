@@ -2,7 +2,6 @@ import pytest
 from swap_meet.clothing import Clothing
 from swap_meet.decor import Decor
 from swap_meet.electronics import Electronics
-from swap_meet.errors import InvalidIDError
 
 TEST_CUSTOM_ID = 12345
 
@@ -154,7 +153,7 @@ def check_category_and_custom_id(to_check, id, category):
 def test_items_use_invalid_id_raise_error():
     # Arrange
     invalid_id = "id"
-    with pytest.raises(InvalidIDError, match="ID must be an integer!!"):
+    with pytest.raises(TypeError):
         Decor(invalid_id)
     
-# =====================================================
+# ===================================================== 

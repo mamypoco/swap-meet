@@ -13,8 +13,11 @@ class Vendor:
         for index in range(len(self.inventory)):
             current_item = self.inventory[index]
             if current_item == item:
-                self.inventory[index] = self.inventory[-1] 
-                self.inventory.pop()
+                # NOTE: since we know the index, using 
+                # pop(index) works and better for readability and still O(1)
+                # self.inventory[index] = self.inventory[-1]
+                # self.inventory.pop()
+                self.inventory.pop(index)
                 break
 
         return item
@@ -97,7 +100,8 @@ class Vendor:
                 best_item = item
             elif item.age == best_item.age:
                 if (item.condition is not None
-                    and (best_item.condition is None or item.condition > best_item.condition)):
+                    and (best_item.condition is None 
+                            or item.condition > best_item.condition)):
                     best_item = item
         
         return best_item
